@@ -1,0 +1,18 @@
+hadoop fs -mkdir /user/cloudera/maxTemp /user/cloudera/maxTemp/input 
+hadoop fs -put weatherData.txt /user/cloudera/maxTemp/input
+
+javac -cp /usr/lib/hadoop/*:/usr/lib/hadoop-mapreduce/* MaxTemperature.java -d build -Xlint 
+
+jar -cvf MaxTemperature.jar -C build/ .
+
+hadoop jar MaxTemperature.jar org.chris.MaxTemperature /user/cloudera/maxTemp/input /user/cloudera/maxTemp/output
+
+hadoop fs -ls /user/cloudera/maxTemp/output/
+
+hadoop fs -cat /user/cloudera/maxTemp/output/*
+
+hadoop fs -cat /user/cloudera/maxTemp/output/part-r-00000
+
+
+
+hadoop fs -rm -r /user/cloudera/maxTemp/output 
